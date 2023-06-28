@@ -31,16 +31,18 @@ annotation's title and message concatinated.
 Without a filter, any annotation of severity warning or higher causes a build
 failure.
 
+A useful regex for gcc is `\[-W[A-Za-z\-]+?\]` (matches "[-Wdeprecated]" etc.)
+
 ## Example usage
 
 Check for annotations within the same workflow
 ```
-  matrix-build-step:
+  matrix-build-step-with-problem-matcher:
     [...]
 
   assert-annotations:
     name: Check for compiler warnings
-    needs: [build-step]
+    needs: [matrix-build-step-with-problem-matcher]
     runs-on: ubuntu-latest
 
     permissions:
@@ -49,9 +51,9 @@ Check for annotations within the same workflow
       actions: read
 
     steps:
-      - name: Check for compiler warnings
+      - name: Check for gcc compiler warnings
         env:
-          filter: ''
+          filter: '\[-W[A-Za-z\-]+?\]'
           workflow_id: ${{ github.run_id }}
           GH_TOKEN: ${{ github.token }}
         uses: root-project/annotation-failure-action@main

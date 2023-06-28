@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/root-project/annotation-features#readme",
   "dependencies": {
+    "@actions/core": "^1.10.0",
     "octokit": "^2.1.0"
   }
 }

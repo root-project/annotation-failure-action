@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Octokit } from 'octokit';
+import core from '@actions/core';
 
 if (!process.env.GH_TOKEN) {
     console.error('Error: The GH_TOKEN environment variable is not set.');
@@ -16,6 +17,13 @@ if (!process.env.GITHUB_REPOSITORY) {
     console.error('Error: The GITHUB_REPOSITORY environment variable is not set.');
     process.exit(1);
 }
+
+const filter = core.getInput('filter') || ""; 
+
+// empty filters will match everything
+const regexFilter = new RegExp(filter);
+
+var badAnnotations = [];
 
 const octokit = new Octokit({ auth: process.env.GH_TOKEN });
 
@@ -34,10 +42,10 @@ const { data: { jobs } } = await octokit.request(
 );
 
 if ( !jobs ) {
-    console.error(`Error: could not get jobs for repository ${ process.env.GITHUB_REPOSITORY }`)
+    console.error(`Error: could not get jobs for repository ${ process.env.GITHUB_REPOSITORY }`);
 }
 
-// ... then get the annotations for each jobs
+// ... then get the annotations for each job
 for (const job of jobs) {
     const { data: annotations } = await octokit.request(
         'GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations',
@@ -54,12 +62,26 @@ for (const job of jobs) {
 
     if ( !annotations ) {
         // this is not always a bug, could just be a run with no annotations
-        console.info(`info: could not get annotations for data for run ${job.id}.`)
+        console.info(`info: could not get annotations for data for run ${job.id}.`);
+		continue;
     }
 
     for (const an of annotations) {
+		const text = an.title + an.message;
+
         if (['warning', 'failure'].includes(an.annotation_level.toLowerCase())) {
-            console.log(an);
-        }
+			if (regexFilter.test(text)) {
+				console.log(an);
+				badAnnotations.push(an);
+			}
+		}
     }
 }
+
+if (badAnnotations.length > 0) {
+	core.setFailed(
+		`Found ${ badAnnotations.length } annotations of 'warning' or higher severity.`
+	);
+}
+
+

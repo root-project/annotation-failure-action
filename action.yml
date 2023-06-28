@@ -5,6 +5,11 @@ description: Allow for run failure on certain annotations, such as annotations f
 
 author: CERN, ROOT Project, Ole Morud
 
+inputs:
+  filter:
+    description: 'Regex to filter annotations, matching annotations causes job failures'
+    required: false
+
 runs:
   using: 'node16'
   main: 'src/annotations.mjs'

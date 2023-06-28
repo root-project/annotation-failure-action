@@ -1,6 +1,9 @@
 
 # Annotation Failure Action
 
+![image](https://github.com/root-project/annotation-failure-action/assets/82065181/60807959-311b-48ef-9122-9654e2fc7836)
+
+
 Causes the build to fail if certain annotations are created. This is useful in 
 conjuntion with
 [problem matchers](https://github.com/actions/toolkit/blob/main/docs/problem-matchers.md)
@@ -15,9 +18,9 @@ read annotations (but likely `checks` and `actions`).
 
 ### filter
 
-**optional** A regex filter that causes job failures when (partially) matching
-an annotation whose severity is 'warning' or higher. More specifically, it
-matches against the annotation's title and message concatinated.
+**optional** A regex filter that causes job failures when it's (partially) matching
+an annotation whose severity is 'warning' or higher. It matches against the
+annotation's title and message concatinated.
 Without a filter, any annotation of severity warning or higher causes a build
 failure.
 
@@ -47,8 +50,7 @@ Check for annotations within the same workflow
         uses: root-project/annotation-failure-action@main
 ```
 
-Check for annotations in a different workflow. Useful in conjunction with a 
-workflow that posts comments on pull requests.
+Check for annotations from a different workflow using `on: workflow_run`.
 ```
 name: Read annotations
 

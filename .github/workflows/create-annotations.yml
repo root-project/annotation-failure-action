@@ -1,0 +1,51 @@
+
+name: Create and read annotations
+
+on:
+  # Enables manual start of workflow
+  push:
+  workflow_dispatch:
+
+jobs:
+  create_annotations_in_matrix:
+    name: Create annotations
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        level: ["warning", "error"]
+        message: ["foo", "bar"]
+    steps:
+      - name: Create annotation
+        run: echo "::${{ matrix.level }}::${{ matrix.message }}"
+
+  read_annotations:
+    name: Read annotations
+    needs: [create_annotations_in_matrix]
+    runs-on: ubuntu-latest
+
+    permissions:
+      checks: write
+      pull-requests: write
+      actions: read
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: npm install
+        run: npm ci
+
+      - name: Print the annotations of this run
+        env:
+          workflow_id: ${{ github.run_id }}
+          GH_TOKEN: ${{ github.token }}
+        uses: ./
+
+  event_file:
+    name: "Upload Event Payload"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: Event File
+        path: ${{ github.event_path }}

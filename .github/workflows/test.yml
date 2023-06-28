@@ -1,0 +1,32 @@
+
+name: Read annotations
+
+on:
+  workflow_run:
+    # do NOT use quotes: https://stackoverflow.com/a/72551795/17876693
+    workflows: [create annotations]
+    types:
+      - completed
+
+jobs:
+  read_annotations:
+    name: Read annotations
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      checks: write
+      pull-requests: write
+      actions: read
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: npm install
+        run: npm ci
+
+      - name: Print the annotations of the run that triggered this
+        env:
+          workflow_id: ${{ github.event.workflow_run.id }}
+          GH_TOKEN: ${{ github.token }}
+        uses: ./

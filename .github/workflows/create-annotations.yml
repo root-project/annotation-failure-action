@@ -7,25 +7,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  create_annotations_in_matrix:
-    name: Create annotations
+  #create_annotations_in_matrix:
+  #  name: Create annotations
+  #  runs-on: ubuntu-latest
+  #  strategy:
+  #    matrix:
+  #      level: ["warning", "error"]
+  #      message: ["foo", "bar"]
+  #  steps:
+
+  compile-awful-code:
+    name: Compile awful code
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        level: ["warning", "error"]
-        message: ["foo", "bar"]
     steps:
-      - name: Create annotation
-        run: echo "::${{ matrix.level }}::${{ matrix.message }}"
+      - uses: actions/checkout@v3
+
+      - name: Add problem matcher
+        uses: olemorud/gcc-problem-matcher@v1.0
+
+      - name: Compile bad code
+        run: c++ -Wall -Wextra test/bad-code.cpp
+
+      - name: Create annotation that should not be matched
+        run: echo "::error::foo"
 
   read_annotations:
     name: Read annotations
-    needs: [create_annotations_in_matrix]
+    needs: [compile-awful-code]
     runs-on: ubuntu-latest
 
     permissions:
       checks: write
-      pull-requests: write
       actions: read
 
     steps:
@@ -37,6 +49,7 @@ jobs:
       - name: Print the annotations of this run
         env:
           workflow_id: ${{ github.run_id }}
+          filter: '\[-W[A-Za-z\-]+?\]'
           GH_TOKEN: ${{ github.token }}
         uses: ./
 

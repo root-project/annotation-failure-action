@@ -58,7 +58,7 @@ for (const job of jobs) {
     }
 
     for (const an of annotations) {
-        if (['warning', 'error'].includes(an.annotation_level.toLowerCase())) {
+        if (['warning', 'failure'].includes(an.annotation_level.toLowerCase())) {
             console.log(an);
         }
     }

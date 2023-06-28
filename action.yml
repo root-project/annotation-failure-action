@@ -1,9 +1,13 @@
 
 name: Annotations Failure Action
 
-description: Allow for run failure on certain annotations, such as annotations from [problem matchers](https://github.com/actions/toolkit/blob/main/docs/problem-matchers.md)
+description: Allow to turn certain annotations (e.g. from problem matchers) into run failures.
 
 author: CERN, ROOT Project, Ole Morud
+
+branding:
+  icon: 'x-octagon'
+  color: 'orange'
 
 inputs:
   filter:

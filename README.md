@@ -13,8 +13,15 @@ to fail the workflow on compiler warnings without enabling `-Werror`.
 
 ### GH\_TOKEN
 
-This workflow requires an access token with yet to be determined permissions to
+**required** This workflow requires an access token with yet to be determined permissions to
 read annotations (but likely `checks` and `actions`).
+
+### workflow\_id
+
+**required** The id of the workflow to check annotations for. For jobs checking their own
+annotations, `${{ github.run_id }}` works. For jobs triggered by `workflow_run`,
+`${{ github.event.workflow_run.id }}` finds the `run_id` of the run that
+triggered this run.
 
 ### filter
 

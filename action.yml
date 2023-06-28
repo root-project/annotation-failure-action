@@ -1,0 +1,11 @@
+
+# TODO: find descriptive name
+name: Annotations++
+
+description: Allow for run failure on certain annotations
+
+author: CERN, ROOT Project, Ole Morud
+
+runs:
+  using: 'node16'
+  main: 'src/annotations.mjs'

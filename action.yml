@@ -6,7 +6,7 @@ description: Allow to turn certain annotations (e.g. from problem matchers) into
 author: CERN, ROOT Project, Ole Morud
 
 branding:
-  icon: 'x-octagon'
+  icon: 'alert-octagon'
   color: 'orange'
 
 inputs:

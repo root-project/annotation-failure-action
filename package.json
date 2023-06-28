@@ -1,0 +1,27 @@
+{
+  "name": "github-annotation-features",
+  "version": "0.1.0",
+  "description": "GitHub action that extends the usage of workflow annotations",
+  "main": "src/annotations.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/root-project/annotation-features.git"
+  },
+  "keywords": [
+    "github",
+    "github-actions",
+    "workflows"
+  ],
+  "author": "CERN, ROOT Project, Ole Morud",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/root-project/annotation-features/issues"
+  },
+  "homepage": "https://github.com/root-project/annotation-features#readme",
+  "dependencies": {
+    "octokit": "^2.1.0"
+  }
+}

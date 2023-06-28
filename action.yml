@@ -1,8 +1,7 @@
 
-# TODO: find descriptive name
-name: Annotations++
+name: Annotations Failure Action
 
-description: Allow for run failure on certain annotations
+description: Allow for run failure on certain annotations, such as annotations from [problem matchers](https://github.com/actions/toolkit/blob/main/docs/problem-matchers.md)
 
 author: CERN, ROOT Project, Ole Morud
 

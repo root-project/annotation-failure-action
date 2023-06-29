@@ -47,11 +47,11 @@ jobs:
         run: npm ci
 
       - name: Print the annotations of this run
-        env:
+        uses: ./
+        with:
           workflow_id: ${{ github.run_id }}
           filter: '\[-W[a-zA-Z-]+?\]'
           GH_TOKEN: ${{ github.token }}
-        uses: ./
 
   event_file:
     name: "Upload Event Payload"

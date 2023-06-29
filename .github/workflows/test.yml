@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: Print the annotations of the run that triggered this
-        env:
+        uses: ./
+        with:
           workflow_id: ${{ github.event.workflow_run.id }}
           GH_TOKEN: ${{ github.token }}
-        uses: ./

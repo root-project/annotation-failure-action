@@ -10,6 +10,12 @@ branding:
   color: 'orange'
 
 inputs:
+  GH_TOKEN:
+    description: 'GitHub token, required to read workflow annotations'
+    required: true
+  workflow_id:
+    description: 'Workflow ID to read annotations from'
+    required: true
   filter:
     description: 'Regex to filter annotations, matching annotations causes job failures'
     required: false

@@ -18,10 +18,11 @@ if (!process.env.GITHUB_REPOSITORY) {
     process.exit(1);
 }
 
-const filter = core.getInput('filter') || ""; 
+const filter = core.getInput('filter') || "";
 
 // empty filters will match everything
 const regexFilter = new RegExp(filter);
+console.log(regexFilter);
 
 var badAnnotations = [];
 
@@ -70,6 +71,7 @@ for (const job of jobs) {
 		const text = an.title + an.message;
 
         if (['warning', 'failure'].includes(an.annotation_level.toLowerCase())) {
+			console.log("debug: trying to match " + text + " to " + filter);
 			if (regexFilter.test(text)) {
 				console.log(an);
 				badAnnotations.push(an);

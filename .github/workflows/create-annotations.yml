@@ -49,7 +49,7 @@ jobs:
       - name: Print the annotations of this run
         env:
           workflow_id: ${{ github.run_id }}
-          filter: '\[-W[A-Za-z\-]+?\]'
+          filter: '\[-W[a-zA-Z-]+?\]'
           GH_TOKEN: ${{ github.token }}
         uses: ./
 

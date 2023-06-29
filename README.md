@@ -31,12 +31,14 @@ annotation's title and message concatinated.
 Without a filter, any annotation of severity warning or higher causes a build
 failure.
 
-A useful regex for gcc is `\[-W[A-Za-z\-]+?\]` (matches "[-Wdeprecated]" etc.)
+A useful regex for gcc is `\[-W[A-Za-z\-]+?\]`.
+This matches the diagnostic flag hints such as `[-Wdeprecated-declarations]` in `warning: ‘D’ is deprecated [-Wdeprecated-declarations]`.
+An alternative would be to search for `warning: ` and alike.
 
 ## Example usage
 
 Check for annotations within the same workflow
-```
+```yaml
   matrix-build-step-with-problem-matcher:
     [...]
 
@@ -60,7 +62,7 @@ Check for annotations within the same workflow
 ```
 
 Check for annotations from a different workflow using `on: workflow_run`.
-```
+```yaml
 name: Read annotations
 
 on:
